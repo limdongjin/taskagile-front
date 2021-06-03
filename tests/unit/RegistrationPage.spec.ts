@@ -2,6 +2,7 @@ import 'jest'
 import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils'
 import RegistrationPage from '@/views/RegistrationPage.vue'
 import registrationService from '@/services/registration'
+import SpyInstance = jest.SpyInstance;
 jest.mock('@/services/registration')
 
 describe('RegistrationPage.vue', () => {
@@ -11,11 +12,12 @@ describe('RegistrationPage.vue', () => {
   let fieldEmailAddress: DOMWrapper<any>
   let buttonSubmit: DOMWrapper<any>
   let $router: any
-  let registerSpy = jest.spyOn(registrationService, 'register')
+  let registerSpy: SpyInstance
   beforeEach(() => {
     const foo = {
       push: jest.fn()
     }
+    registerSpy = jest.spyOn(registrationService, 'register')
     console.log(foo)
     $router = {
       push: jest.fn()

@@ -3,10 +3,7 @@
     <div class="row justify-content-center">
       <div class="register-form">
         <!-- logo wrapper -->
-        <div class="logo-wrapper">
-          <img src="https://google.com" alt="logo" id="logo">
-          <p class="tagline">Open source task management tool</p>
-        </div>
+        <Logo/>
 
         <!-- 에러 메세지 -->
         <div v-show="errorMessage" class="alert alert-danger failed">
@@ -17,7 +14,6 @@
         <form @submit.prevent="submitForm">
           <div class="form-group">
             <label for="username">사용자 이름</label>
-            <p id="tmp_user">{{form.username}}</p>
             <input type="text" class="form-control" id="username" placeholder="name" v-model="form.username">
           </div>
           <div class="form-group">
@@ -42,12 +38,17 @@
 
 <script lang="ts">
 import registrationService from '@/services/registration'
-import { Vue } from 'vue-class-component'
-import { Form, FormImpl } from '@/types/Form'
+import { Vue, Options } from 'vue-class-component'
+import { UserForm, FormImpl } from '@/api/UserForm'
+import Logo from '@/components/Logo.vue'
 
-// @Component
+@Options({
+  components: {
+    Logo
+  }
+})
 export default class RegistrationPage extends Vue {
-  public form: Form = new FormImpl()
+  public form: UserForm = new FormImpl()
 
   public errorMessage: string = ''
 
@@ -58,15 +59,13 @@ export default class RegistrationPage extends Vue {
       return
     }
 
-    await registrationService.register(this.form).then(() => {
-      this.$router.push({ name: 'Login' })
-    }).catch(error => {
-      this.errorMessage = 'Failed to register user. Reason: ' + (error.message ? error.message : 'unknown')
-    })
+    await registrationService.register(this.form)
+      .then(() => {
+        this.$router.push({ name: 'Login' })
+      })
+      .catch(error => {
+        this.errorMessage = 'Failed to register user. Reason: ' + (error.message ? error.message : 'unknown')
+      })
   }
 }
 </script>
-
-<style scoped>
-
-</style>

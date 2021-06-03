@@ -1,4 +1,5 @@
-export interface Form {
+// [TODO] 파일 위치 , 파일 이름 변경 하기
+export interface UserForm {
   username: string,
   emailAddress: string,
   password: string,
@@ -6,7 +7,7 @@ export interface Form {
   validateEmail: () => boolean
 }
 
-export class FormImpl implements Form {
+export class FormImpl implements UserForm {
   username: string = '';
   emailAddress: string = '';
   password: string = '';

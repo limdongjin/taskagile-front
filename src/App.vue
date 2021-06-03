@@ -7,6 +7,8 @@
 <script lang="ts">
 // import Vue from 'vue'
 import { Vue } from 'vue-class-component'
+// import BaseComponent from '@/components/BaseComponent.vue'
+
 export default class App extends Vue {
   // export default Vue.extend({
   // name: 'app'

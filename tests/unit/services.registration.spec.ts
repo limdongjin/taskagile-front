@@ -1,6 +1,7 @@
 import moxios from 'moxios'
 import registrationService from '@/services/registration'
-import { Form, FormImpl } from '@/types/Form'
+import { FormImpl, UserForm } from '@/api/UserForm'
+
 describe('services/registration', () => {
   beforeEach(() => {
     moxios.install()
@@ -12,7 +13,7 @@ describe('services/registration', () => {
   it('should pass the response to caller when request succeeded', async () => {
     expect.assertions(2)
 
-    const stub: Form = new FormImpl()
+    const stub: UserForm = new FormImpl()
     await moxios.wait(() => {
       const req = moxios.requests.mostRecent()
       expect(req).toBeTruthy()
