@@ -1,35 +1,42 @@
 import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils'
 import LoginPage from '@/views/LoginPage.vue'
-// import { UserForm } from '@/../../types/UserForm'
-import authenticationService from '@/services/authentication'
+import { RegistrationForm } from '@/api/RegistrationForm'
+import AuthenticationService from '@/services/authentication'
+jest.mock('@/services/authentication')
 
 describe('LoginPage', () => {
   let wrapper: VueWrapper<any>
   let fieldUsername: DOMWrapper<any>
   let fieldPassword: DOMWrapper<any>
   let buttonSubmit: DOMWrapper<any>
+  let authenticationSpy: jest.SpyInstance
 
   beforeEach(() => {
     wrapper = mount(LoginPage)
     fieldUsername = wrapper.find('#username')
     fieldPassword = wrapper.find('#password')
     buttonSubmit = wrapper.find('form button[type="submit"]')
+    authenticationSpy = jest.spyOn(AuthenticationService, 'auth')
   })
+  afterEach(() => {
+    authenticationSpy.mockReset()
+    authenticationSpy.mockRestore()
+  })
+  afterAll(()=>{
+    jest.resetAllMocks()
+  })
+
   it('submitForm() 은 authentication service 를 호출하고 응답에 따라서 적절한 행동을 한다', async () => {
     const submitForm = wrapper.vm.submitForm
+    const isValidMock = jest.spyOn(wrapper.vm, 'isValid')
 
-    const isValidMock = jest.fn()
     isValidMock.mockReturnValue(true)
-    wrapper.vm.isValid = isValidMock
-
-    const authenticationSpy = jest.spyOn(authenticationService, 'auth')
-    // @ts-ignore
-    authenticationSpy.mockResolvedValue({ isAuth: true })
+    authenticationSpy = jest.spyOn(AuthenticationService, 'auth')
+    authenticationSpy.mockResolvedValue(111)
 
     const successSpy = jest.spyOn(wrapper.vm, 'success')
     successSpy.mockResolvedValue(0)
     const failSpy = jest.spyOn(wrapper.vm, 'fail')
-    failSpy.mockResolvedValue(0)
 
     // when
     await submitForm()
@@ -41,14 +48,15 @@ describe('LoginPage', () => {
     expect(successSpy).toBeCalledTimes(1)
     expect(failSpy).toBeCalledTimes(0)
   })
-  it('submit 버튼을 누르면 submitForm 메서드가 실행된다. ', async () => {
-    const spyFn = jest.spyOn(wrapper.vm, 'submitForm')
+  it('submit 버튼을 누르면 submitForm 메서드가 실행되고, auth 서비스 실행 ', async () => {
+    const submitFormSpy = jest.spyOn(wrapper.vm, 'submitForm')
 
     // when
     await buttonSubmit.trigger('submit')
 
     // then
-    expect(spyFn).toBeCalledTimes(1)
+    expect(submitFormSpy).toBeCalledTimes(1)
+    expect(authenticationSpy).toBeCalledTimes(1)
   })
 
   it('Login Page should have some elements', () => {
@@ -65,12 +73,15 @@ describe('LoginPage', () => {
   })
   it('데이터 바인딩이 잘되는지 확인', async () => {
     const username = 'user1'
-    // const emailAddress = 'ema2@nav.com'
     const password = '1q2w3e'
-    const form: UserForm = wrapper.vm.form
+    const form: RegistrationForm = wrapper.vm.form
 
     // when
-    await form.setForm(username, '', password)
+    await (async () => {
+      form.username = username
+      form.emailAddress = ''
+      form.password = password
+    })()
 
     // then
     expect(fieldUsername.element.value)

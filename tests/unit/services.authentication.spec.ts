@@ -1,6 +1,6 @@
 import moxios from 'moxios'
 import authenticationService from '@/services/authentication'
-import { UserForm, FormImpl } from '@/api/UserForm'
+import { RegistrationForm, RegistrationFormImpl } from '@/api/RegistrationForm'
 
 describe('services/authentication', () => {
   beforeEach(() => {
@@ -9,19 +9,43 @@ describe('services/authentication', () => {
   afterEach(() => {
     moxios.uninstall()
   })
+  it('성공 했을때 응답', () => {
+    const stub = new RegistrationFormImpl()
+    moxios.wait(()=>{
+      let req = moxios.requests.mostRecent()
+      expect(req.url).toEqual('/authentications')
+      req.respondWith({
+        status: 200,
+        response: { message: 'success' }
+      })
+    })
+    return authenticationService.auth(stub)
+      .then((data) => {
+        expect(data.message)
+          .toEqual('success')
+      })
+  })
+  it('/authentications 를 호출한다.', () => {
+    const stub = new RegistrationFormImpl()
+    moxios.wait(()=>{
+      let req = moxios.requests.mostRecent()
+      expect(req.url).toEqual('/authentications')
+      req.respondWith({
+        status: 200,
+        response: {message: 'success'}
+      })
+    })
 
+    return authenticationService.auth(stub)
+  })
   it('401 상태코드가 응답으로 오면, 에러를 반환한다. ', async () => {
-    const stub: UserForm = new FormImpl()
+    const stub: RegistrationForm = new RegistrationFormImpl()
     moxios.wait(() => {
       const req = moxios.requests.mostRecent()
       expect(req).toBeTruthy()
       req.respondWith({
         status: 401,
-        // @ts-ignore
-        user: {
-          username: 'user1',
-          email: 'us@gmail.com'
-        }
+        response: { message: 'success' }
       })
     })
 

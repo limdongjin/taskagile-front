@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://localhost:8080/api'
+axios.defaults.baseURL = '/api'
 axios.defaults.headers.common.Accept = 'application/json'
 axios.interceptors.response.use(
   response => response,
@@ -13,5 +13,6 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
+axios.defaults.headers.HTTP2_HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'http://localhost:8080'
 
 createApp(App).use(store).use(router).mount('#app')

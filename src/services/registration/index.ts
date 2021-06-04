@@ -1,11 +1,9 @@
-import { UserForm } from '@/api/UserForm'
+import { RegistrationForm } from '@/api/RegistrationForm'
 import axios from 'axios'
 
 export default {
-  register (detail: UserForm) {
+  register (detail: RegistrationForm) {
     return new Promise((resolve, reject) => {
-      console.log('registration service object called')
-
       axios.post('/registrations', detail).then(({ data }) => {
         resolve(data)
       }).catch((error: any) => {

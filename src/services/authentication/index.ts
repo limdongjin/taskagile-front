@@ -1,19 +1,16 @@
-import { UserForm } from '@/api/UserForm'
+import { RegistrationForm } from '@/api/RegistrationForm'
 import axios from 'axios'
+import { AuthForm } from '@/api/AuthForm'
 
 export default class AuthenticationService {
-  public static async auth (detail: UserForm) {
+  public static async auth (detail: AuthForm) {
     try {
-      console.log('axios called')
-      // axios.create()
-      return await axios.post('/authentications')
+      const res = await axios.post('/authentications', detail)
+      const data = res.data
+
+      return data
     } catch (err) {
-      // [TODO] 현재는 상태코드가 500, 400 등이 모두 같은 에러 메시지를 보내고있다. 좀더 개선해보자.
-      // const status = err.response.status
-      // console.log('catch axios')
-      // console.log(err.response)
-      // let aa: Error = Error()
-      // aa.response
+      // [TODO] 현재는 상태코드가 500, 400 등으로 오면 모두 같은 에러 객체를 보내고있다. 좀더 개선해보자.
       throw new Error('Not Authorize')
     }
   }

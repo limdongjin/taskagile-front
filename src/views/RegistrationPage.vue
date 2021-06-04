@@ -39,7 +39,7 @@
 <script lang="ts">
 import registrationService from '@/services/registration'
 import { Vue, Options } from 'vue-class-component'
-import { UserForm, FormImpl } from '@/api/UserForm'
+import { RegistrationForm, RegistrationFormImpl } from '@/api/RegistrationForm'
 import Logo from '@/components/Logo.vue'
 
 @Options({
@@ -48,7 +48,7 @@ import Logo from '@/components/Logo.vue'
   }
 })
 export default class RegistrationPage extends Vue {
-  public form: UserForm = new FormImpl()
+  public form: RegistrationForm = new RegistrationFormImpl()
 
   public errorMessage: string = ''
 

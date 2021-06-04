@@ -29,11 +29,10 @@
 </template>
 
 <script lang="ts">
-// import { FormImpl, UserForm } from '@/../../types/UserForm'
-import { FormImpl, UserForm } from '@/api/UserForm'
 import AuthenticationService from '@/services/authentication'
 import Logo from '@/components/Logo.vue'
 import { Options, Vue } from 'vue-class-component'
+import { AuthForm, AuthFormImpl } from '@/api/AuthForm'
 
 @Options({
   components: {
@@ -41,7 +40,7 @@ import { Options, Vue } from 'vue-class-component'
   }
 })
 export default class LoginPage extends Vue {
-  public form: UserForm = new FormImpl()
+  public form: AuthForm = new AuthFormImpl('', '')
   public errorMessages: string = ''
 
   async submitForm (): Promise<void> {
@@ -58,7 +57,6 @@ export default class LoginPage extends Vue {
   }
 
   async success (res: any) {
-    console.log(res)
     await this.$router.push({ name: 'Home' })
   }
 

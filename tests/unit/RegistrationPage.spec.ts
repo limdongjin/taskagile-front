@@ -14,11 +14,8 @@ describe('RegistrationPage.vue', () => {
   let $router: any
   let registerSpy: SpyInstance
   beforeEach(() => {
-    const foo = {
-      push: jest.fn()
-    }
+
     registerSpy = jest.spyOn(registrationService, 'register')
-    console.log(foo)
     $router = {
       push: jest.fn()
     }
