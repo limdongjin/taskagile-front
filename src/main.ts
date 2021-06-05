@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
-import store from './store'
+import { store } from './store'
 import axios from 'axios'
 
 // Font , Icon 관련 라이브러리
@@ -23,6 +23,5 @@ axios.defaults.headers.HTTP2_HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'http://localh
 faLibrary.add(faHome)
 faLibrary.add(faSearch)
 faLibrary.add(faPlus)
-// Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-createApp(App).use(store).use(router).mount('#app')
+const app = createApp(App).use(router).use(store).mount('#app')

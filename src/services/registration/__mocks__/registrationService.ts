@@ -1,7 +1,9 @@
 // import { UserForm } from '@/../../../../types/UserForm'
 
+import {RegistrationForm} from "@/api/RegistrationForm";
+
 export default {
-  register (detail: UserForm) {
+  register (detail: RegistrationForm) {
     return new Promise((resolve, reject) => {
       detail.emailAddress === 'dongjin@example.com'
         ? resolve({ result: 'success' })

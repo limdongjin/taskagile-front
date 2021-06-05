@@ -11,8 +11,8 @@ describe('services/authentication', () => {
   })
   it('성공 했을때 응답', () => {
     const stub = new RegistrationFormImpl()
-    moxios.wait(()=>{
-      let req = moxios.requests.mostRecent()
+    moxios.wait(() => {
+      const req = moxios.requests.mostRecent()
       expect(req.url).toEqual('/authentications')
       req.respondWith({
         status: 200,
@@ -27,12 +27,12 @@ describe('services/authentication', () => {
   })
   it('/authentications 를 호출한다.', () => {
     const stub = new RegistrationFormImpl()
-    moxios.wait(()=>{
-      let req = moxios.requests.mostRecent()
+    moxios.wait(() => {
+      const req = moxios.requests.mostRecent()
       expect(req.url).toEqual('/authentications')
       req.respondWith({
         status: 200,
-        response: {message: 'success'}
+        response: { message: 'success' }
       })
     })
 

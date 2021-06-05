@@ -1,6 +1,6 @@
 <template>
   <div class="page-header d-flex align-content-center">
-    <div class="logo">
+    <div class="logo" @click="goHome()">
       <font-awesome-icon icon="home" class="home-icon" />
       <img class="logo" src="/logo.png">
     </div>
@@ -10,8 +10,17 @@
           Boards
         </button>
         <div class="dropdown-menu" aria-labelledby="boardsMenu">
-          <h6 class="dropdown-header">Personal Boards</h6>
-          <button class="dropdown-item" type="button">vuejs.spring-boot.mysql</button>
+          <div v-show="!hasBoards" class="dropdown-item">No boards</div>
+          <div v-show="hasBoards">
+            <h6 class="dropdown-header" v-show="personalBoards.length > 1">Personal Boards</h6>
+            <button v-for="board in personalBoards" v-bind:key="board.id" @click="openBoard(board)"
+                    class="dropdown-item" type="button">{{ board.name }}</button>
+            <div v-for="team in teamBoards" v-bind:key="'t' + team.id">
+              <h6 class="dropdown-header">{{ team.name }}</h6>
+              <button v-for="board in team.boards" v-bind:key="board.id" @click="openBoard(board)"
+                      class="dropdown-item" type="button">{{ board.name }}</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -24,7 +33,7 @@
     <div class="profile-menu-toggle">
       <div class="dropdown">
         <button class="btn dropdown-toggle" type="button" id="profileMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          limdongjn
+          {{ user.name }}
         </button>
         <div class="dropdown-menu" aria-labelledby="profileMenu">
           <button class="dropdown-item" type="button">Profile</button>
@@ -37,9 +46,39 @@
 
 <script>
 import 'bootstrap/dist/js/bootstrap.min'
-import { Vue } from 'vue-class-component'
+import { Options, Vue } from 'vue-class-component'
+import { mapGetters } from 'vuex'
+import { GettersType } from '@/store/getters-type'
+import { ActionTypes } from '@/store/action-types'
+// import { ActionTypes } from '@/store/action-types'
 
+@Options({
+  created () {
+    this.$store.dispatch(ActionTypes.ADD_TEAM, {
+      id: 1,
+      name: 'team1'
+    })
+    // this.$store.dispatch(ActionTypes.GET_MY_DATA, undefined)
+  },
+  computed: {
+    ...mapGetters([
+      GettersType.user,
+      GettersType.hasBoards,
+      GettersType.teamBoards,
+      GettersType.personalBoards
+    ])
+  },
+  methods: {
+    goHome () {
+      this.$router.push({ name: 'Home' })
+    },
+    openBoard (board) {
+      this.$router.push({ name: 'Board', params: { boardId: board.id } })
+    }
+  }
+})
 export default class PageHeader extends Vue {
+
 }
 </script>
 
@@ -53,17 +92,18 @@ export default class PageHeader extends Vue {
     height: 25px;
     width: 115px;
     margin-top: 2px;
+    cursor: pointer;
 
     .home-icon {
-      font-size: 25px;
+      font-size: 20px;
       vertical-align: middle;
     }
 
     img {
       margin-left: 5px;
+      margin-top: 6px;
       width: 80px;
-      height: 20px;
-      vertical-align: bottom;
+      // vertical-align: bottom;
     }
   }
 
@@ -96,6 +136,7 @@ export default class PageHeader extends Vue {
       height: calc(1.8125rem + 5px);
       font-size: 1rem;
       border: 1px solid #eee;
+      border-radius: 5px;
     }
 
     input:focus {
