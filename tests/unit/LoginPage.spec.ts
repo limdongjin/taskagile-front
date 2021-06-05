@@ -1,7 +1,7 @@
 import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils'
 import LoginPage from '@/views/LoginPage.vue'
 import { RegistrationForm } from '@/api/RegistrationForm'
-import AuthenticationService from '@/services/authentication'
+import AuthenticationService from '@/services/authentication/authenticationService'
 jest.mock('@/services/authentication')
 
 describe('LoginPage', () => {

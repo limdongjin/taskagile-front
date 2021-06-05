@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import registrationService from '@/services/registration'
+import registrationService from '@/services/registration/registrationService'
 import { Vue, Options } from 'vue-class-component'
 import { RegistrationForm, RegistrationFormImpl } from '@/api/RegistrationForm'
 import Logo from '@/components/Logo.vue'

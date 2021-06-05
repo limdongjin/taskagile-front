@@ -1,7 +1,7 @@
 import 'jest'
 import { DOMWrapper, mount, VueWrapper } from '@vue/test-utils'
 import RegistrationPage from '@/views/RegistrationPage.vue'
-import registrationService from '@/services/registration'
+import registrationService from '@/services/registration/registrationService'
 import SpyInstance = jest.SpyInstance;
 jest.mock('@/services/registration')
 

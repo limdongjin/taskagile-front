@@ -1,5 +1,5 @@
 import moxios from 'moxios'
-import registrationService from '@/services/registration'
+import registrationService from '@/services/registration/registrationService'
 import { RegistrationFormImpl, RegistrationForm } from '@/api/RegistrationForm'
 
 describe('services/registration', () => {

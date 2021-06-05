@@ -1,5 +1,4 @@
 <template>
-  <h1>Login</h1>
   <div class="container public">
     <div class="row justify-content-center">
       <div class="register-form">
@@ -21,22 +20,29 @@
             <input type="text" class="form-control" id="password" v-model="form.password">
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+          <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+          <div class="links">
+            <p class="sign-up text-muted">Don't have an account yet? <a href="/register" class="link-sign-up">Sign up here</a></p>
+            <p><a href="#">Forgot your password?</a></p>
+          </div>
         </form>
       </div>
     </div>
+    <PageFooter />
   </div>
 </template>
 
 <script lang="ts">
-import AuthenticationService from '@/services/authentication'
+import AuthenticationService from '@/services/authentication/authenticationService'
 import Logo from '@/components/Logo.vue'
+import PageFooter from '@/components/PageFooter.vue'
 import { Options, Vue } from 'vue-class-component'
 import { AuthForm, AuthFormImpl } from '@/api/AuthForm'
 
 @Options({
   components: {
-    Logo
+    Logo,
+    PageFooter
   }
 })
 export default class LoginPage extends Vue {
@@ -72,5 +78,8 @@ export default class LoginPage extends Vue {
 </script>
 
 <style scoped>
-
+.links {
+  margin: 30px 0 50px 0;
+  text-align: center;
+}
 </style>
