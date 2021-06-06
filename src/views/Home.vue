@@ -88,7 +88,7 @@ export default class Home extends Vue {
 
   onBoardCreated (boardId: number) {
     console.log('onBoardCreated')
-    this.$router.push({ name: 'board', params: { boardId: boardId } })
+    this.$router.push({ name: 'Board', params: { boardId: boardId } })
   }
 }
 </script>

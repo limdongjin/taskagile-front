@@ -6,7 +6,7 @@ export default class BoardService {
       const axiosResponse = await axios.post('/boards', detail)
       return axiosResponse.data
     } catch (err) {
-      throw new Error('failed get board ' + err)
+      throw new Error('failed create board ' + err)
     }
   }
 }

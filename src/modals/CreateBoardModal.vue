@@ -87,6 +87,7 @@ export default class CreateBoardModal extends Vue {
       this.$emit('created', createdBoard.id)
       this.close()
     }).catch((error: any) => {
+      alert(error)
       this.errorMessage = error.message
     })
   }
