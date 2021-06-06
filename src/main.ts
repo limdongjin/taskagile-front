@@ -10,6 +10,11 @@ import { library as faLibrary } from '@fortawesome/fontawesome-svg-core'
 import { faHome, faSearch, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+// bootstrap
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.common.Accept = 'application/json'
 axios.interceptors.response.use(
@@ -23,5 +28,7 @@ axios.defaults.headers.HTTP2_HEADER_ACCESS_CONTROL_ALLOW_ORIGIN = 'http://localh
 faLibrary.add(faHome)
 faLibrary.add(faSearch)
 faLibrary.add(faPlus)
+
+// BootstrapVue.install()
 
 const app = createApp(App).use(router).use(store).mount('#app')

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default class TeamService {
-  async create (detail: any) {
+  static async create (detail: any) {
     try {
       const axiosResponse = await axios.post('/teams', detail)
       return axiosResponse.data
